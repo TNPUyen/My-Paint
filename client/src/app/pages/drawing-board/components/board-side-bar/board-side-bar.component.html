@@ -1,0 +1,34 @@
+<div class="board-sidebar-container">
+  <div class="board-sidebar-content">
+    <div [ngClass]="tools.chosenTool == tool.name ? 'board_sidebar_chosen_tool': 'board_sidebar_tool'"
+      *ngFor="let tool of toolsList" (click)="tools.pickTool(tool.name)">
+      <i [class]="tool.icon"></i>
+    </div>
+    <!-- shape picker -->
+    <div style="position: relative;">
+      <div class="pick-shape-container">
+        <i [class]="shapes.chosenShape"></i>
+        <i class="fi fi-br-caret-right" (click)="openShape()"></i>
+      </div>
+      <div *ngIf="isChooseShape" class="picker-container">
+        <div *ngFor="let shape of shapes.shapes" [ngClass]="shapes.chosenShape == shape.shapeIcon ? 'chosen_shape' : 'shape'">
+          <i [class]="shape.shapeIcon"  (click)="pickShape(shape)"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- color picker -->
+    <div style="position: relative;">
+      <div class="pick-color-container">
+        <div class="pick-color" [style.background]="colors.chosenColor"></div>
+        <i class="fi fi-br-caret-right" (click)="openColor()"></i>
+      </div>
+      <div *ngIf="isChooseColor" class="picker-container">
+        <div (click)="pickColor(color)" [ngClass]="colors.chosenColor == color.color ? 'chosen_color': 'color'" [style.background]="color.color"
+          *ngFor="let color of colors.colors"></div>
+      </div>
+    </div>
+    
+  </div>
+
+</div>
