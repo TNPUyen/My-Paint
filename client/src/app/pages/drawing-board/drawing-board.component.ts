@@ -27,8 +27,8 @@ export class DrawingBoardComponent implements OnInit {
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(event: any){
     if(this.tools.chosenTool == 'Eraser'){
-      this.eraserCursor.nativeElement.style.left = event.clientX + this.tools.chosenSize + 'px';
-      this.eraserCursor.nativeElement.style.top = event.clientY + this.tools.chosenSize  + 'px';
+      this.eraserCursor.nativeElement.style.left = event.clientX+ 'px';
+      this.eraserCursor.nativeElement.style.top = event.clientY+ 'px';
     }
   }
 
