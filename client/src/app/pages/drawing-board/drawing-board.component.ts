@@ -4,6 +4,7 @@ import { Eraser } from 'src/app/models/eraser';
 import { Pen } from 'src/app/models/pen';
 import { Rectangle } from 'src/app/models/rectangle';
 import { Square } from 'src/app/models/square';
+import { Star } from 'src/app/models/star';
 import { Triangle } from 'src/app/models/triangle';
 import { ColorsService } from 'src/app/services/colors/colors.service';
 import { ShapeService } from 'src/app/services/shapes/shape.service';
@@ -92,6 +93,10 @@ export class DrawingBoardComponent implements OnInit {
       let triangle = new Triangle(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
       triangle.draw(ctx);
     }
+    if(this.shapes.chosenShape.name == 'star'){
+      let star = new Star(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
+      star.draw(ctx);
+    }
     return false;
   }
 
@@ -111,6 +116,10 @@ export class DrawingBoardComponent implements OnInit {
     if(this.shapes.chosenShape.name == 'triangle'){
       let triangle = new Triangle(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
       triangle.fillColor(ctx);
+    }
+    if(this.shapes.chosenShape.name == 'star'){
+      let star = new Star(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
+      star.fillColor(ctx);
     }
     return false;
   }
