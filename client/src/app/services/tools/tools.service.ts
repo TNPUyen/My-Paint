@@ -19,10 +19,10 @@ export class ToolsService {
     },
   ]
 
+
   constructor() { }
 
   pickTool(toolId: string){
-    console.log(toolId);
     this.chosenTool = toolId;
   }
 }

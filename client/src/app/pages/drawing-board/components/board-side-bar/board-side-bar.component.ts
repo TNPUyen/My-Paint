@@ -13,6 +13,7 @@ export class BoardSideBarComponent implements OnInit {
   isChooseColor: boolean = false;
   isChooseShape: boolean = false;
   isChooseSize: boolean = false;
+  cursor: any = 'default';
   constructor(
     public tools: ToolsService,
     public colors: ColorsService,

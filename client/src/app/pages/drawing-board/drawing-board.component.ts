@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Circle } from 'src/app/models/circle';
+import { Eraser } from 'src/app/models/eraser';
 import { Pen } from 'src/app/models/pen';
 import { Rectangle } from 'src/app/models/rectangle';
 import { Square } from 'src/app/models/square';
@@ -55,7 +56,7 @@ export class DrawingBoardComponent implements OnInit {
     if(!this.isDrawing) return; 
     ctx.putImageData(this.snapshot, 0, 0);
     ctx.lineWidth = this.tools.chosenSize;
-    
+
     if(this.tools.chosenTool == 'Pen'){
       let pen = new Pen({ x: e.offsetX, y: e.offsetY });
       ctx.strokeStyle = this.colors.chosenColor;
@@ -69,6 +70,8 @@ export class DrawingBoardComponent implements OnInit {
       }else{
         this.drawShape(ctx, e);
       }
+    }else if(this.tools.chosenTool == 'Eraser'){
+      this.erase(ctx, e);
     }
   }
 
@@ -112,5 +115,9 @@ export class DrawingBoardComponent implements OnInit {
     return false;
   }
 
-
+  erase(ctx: any, e: any){
+    let eraser = new Eraser({ x: e.offsetX, y: e.offsetY });
+    ctx.lineWidth = this.tools.chosenSize;
+    eraser.draw(ctx);
+  }
 }
