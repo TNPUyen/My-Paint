@@ -5,7 +5,11 @@ import { Injectable } from '@angular/core';
 })
 export class ShapeService {
 
-  chosenShape = 'fi fi-rr-rectangle-horizontal'
+  chosenShape = {
+    id: 0,
+    name: 'rectangle',
+    shapeIcon: 'fi fi-rr-rectangle-horizontal',
+  }
   shapes = [
     {
       id: 0,
@@ -37,6 +41,6 @@ export class ShapeService {
   constructor() { }
 
   pickShape(shape: any){
-    this.chosenShape = shape.shapeIcon;
+    this.chosenShape = shape;
   }
 }

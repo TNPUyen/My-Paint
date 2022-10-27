@@ -1,19 +1,21 @@
 import { Point } from "./point";
 import { Shape } from "./shape";
 
-export class Rectangle implements Shape {
+export class Circle implements Shape{
     startPoint: Point;
     endPoint: Point;
     color: string;
+
     constructor(startPoint: Point, endPoint: Point, color: string) {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.color = color;
     }
-
-    draw(ctx: any) { 
-        ctx.strokeRect(this.startPoint.x, this.startPoint.y, this.endPoint.x - this.startPoint.x, this.endPoint.y - this.startPoint.y);
-        ctx.strokeStyle = this.color;
+    draw(ctx: any) {
+        ctx.beginPath();
+        let radius = Math.sqrt(Math.pow(this.startPoint.x - this.endPoint.x, 2) + Math.pow(this.startPoint.y - this.endPoint.y, 2));
+        ctx.arc(this.startPoint.x, this.startPoint.y, radius, 0, 2 * Math.PI);
+        ctx.fillStyle = this.color;
         ctx.stroke();
     }
     move(point: Point) {

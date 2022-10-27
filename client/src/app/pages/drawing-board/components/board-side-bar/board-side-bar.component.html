@@ -4,15 +4,23 @@
       *ngFor="let tool of toolsList" (click)="tools.pickTool(tool.name)">
       <i [class]="tool.icon"></i>
     </div>
+
     <!-- shape picker -->
     <div style="position: relative;">
-      <div class="pick-shape-container">
-        <i [class]="shapes.chosenShape"></i>
+      <div class="pick-shape-container" [ngClass]="tools.chosenTool == 'Shape' ? 'board_sidebar_chosen_tool': 'board_sidebar_tool'"
+      (click)="tools.pickTool('Shape')">
+        <i [class]="shapes.chosenShape.shapeIcon"></i>
         <i class="fi fi-br-caret-right" (click)="openShape()"></i>
       </div>
       <div *ngIf="isChooseShape" class="picker-container">
-        <div *ngFor="let shape of shapes.shapes" [ngClass]="shapes.chosenShape == shape.shapeIcon ? 'chosen_shape' : 'shape'">
-          <i [class]="shape.shapeIcon"  (click)="pickShape(shape)"></i>
+        <div style="display: flex; flex-direction: row">
+          <div *ngFor="let shape of shapes.shapes" [ngClass]="shapes.chosenShape.shapeIcon == shape.shapeIcon ? 'chosen_shape' : 'shape'">
+            <i [class]="shape.shapeIcon"  (click)="pickShape(shape)"></i>
+          </div>
+        </div>
+        <div>
+          <input type="checkbox" id="fill-color">
+          <label for="fill-color"> Fill color</label>
         </div>
       </div>
     </div>

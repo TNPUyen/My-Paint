@@ -8,8 +8,7 @@ export class Pen{
         this.position = position;
     }
 
-    draw(ctx: any, isDrawing: any){
-       if(!isDrawing) return;
+    draw(ctx: any){
        ctx?.lineTo(this.position.x, this.position.y);
        ctx?.stroke();
     }

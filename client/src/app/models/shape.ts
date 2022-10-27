@@ -5,7 +5,7 @@ export interface Shape{
     endPoint: Point;
     color: string;
 
-    draw(ctx: any, e: any): any;
+    draw(ctx: any): any;
     move(point: Point): any;
     resize(point: Point): any;
     rotate(angle: number): any;
