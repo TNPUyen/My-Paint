@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class ToolsService {
   chosenTool: string = 'Pointer';
+  chosenSize: number =  2;
   boardSideBarItems = [
     {
       id: 0,

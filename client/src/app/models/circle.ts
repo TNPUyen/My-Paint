@@ -15,7 +15,7 @@ export class Circle implements Shape{
         ctx.beginPath();
         let radius = Math.sqrt(Math.pow(this.startPoint.x - this.endPoint.x, 2) + Math.pow(this.startPoint.y - this.endPoint.y, 2));
         ctx.arc(this.startPoint.x, this.startPoint.y, radius, 0, 2 * Math.PI);
-        ctx.fillStyle = this.color;
+        ctx.strokeStyle = this.color;
         ctx.stroke();
     }
     move(point: Point) {
@@ -27,8 +27,14 @@ export class Circle implements Shape{
     rotate(angle: number) {
         throw new Error("Method not implemented.");
     }
-    fillColor(color: string) {
-        throw new Error("Method not implemented.");
+    fillColor(ctx: any) {
+        ctx.beginPath();
+        let radius = Math.sqrt(Math.pow(this.startPoint.x - this.endPoint.x, 2) + Math.pow(this.startPoint.y - this.endPoint.y, 2));
+        ctx.arc(this.startPoint.x, this.startPoint.y, radius, 0, 2 * Math.PI);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.strokeStyle = this.color;
+        ctx.stroke();
     }
     strokeColor(color: string) {
         throw new Error("Method not implemented.");

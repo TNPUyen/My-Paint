@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class ShapeService {
 
+  isFillingShape = false;
   chosenShape = {
     id: 0,
     name: 'rectangle',

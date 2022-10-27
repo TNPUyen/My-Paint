@@ -1,42 +1,66 @@
 <div class="board-sidebar-container">
   <div class="board-sidebar-content">
-    <div [ngClass]="tools.chosenTool == tool.name ? 'board_sidebar_chosen_tool': 'board_sidebar_tool'"
+    <div class="tool-item" [ngClass]="tools.chosenTool == tool.name ? 'board_sidebar_chosen_tool': 'board_sidebar_tool'"
       *ngFor="let tool of toolsList" (click)="tools.pickTool(tool.name)">
       <i [class]="tool.icon"></i>
     </div>
 
     <!-- shape picker -->
-    <div style="position: relative;">
-      <div class="pick-shape-container" [ngClass]="tools.chosenTool == 'Shape' ? 'board_sidebar_chosen_tool': 'board_sidebar_tool'"
-      (click)="tools.pickTool('Shape')">
+    <div style="position: relative">
+      <div class="picker"
+        [ngClass]="tools.chosenTool == 'Shape' ? 'board_sidebar_chosen_tool': 'board_sidebar_tool'"
+        (click)="tools.pickTool('Shape')">
         <i [class]="shapes.chosenShape.shapeIcon"></i>
         <i class="fi fi-br-caret-right" (click)="openShape()"></i>
       </div>
-      <div *ngIf="isChooseShape" class="picker-container">
+      <div *ngIf="isChooseShape" class="picker-container shape-picker-container ">
         <div style="display: flex; flex-direction: row">
-          <div *ngFor="let shape of shapes.shapes" [ngClass]="shapes.chosenShape.shapeIcon == shape.shapeIcon ? 'chosen_shape' : 'shape'">
-            <i [class]="shape.shapeIcon"  (click)="pickShape(shape)"></i>
+          <div *ngFor="let shape of shapes.shapes"
+            [ngClass]="shapes.chosenShape.shapeIcon == shape.shapeIcon ? 'chosen_shape' : 'shape'">
+            <i [class]="shape.shapeIcon" (click)="pickShape(shape)"></i>
           </div>
         </div>
         <div>
-          <input type="checkbox" id="fill-color">
+          <input type="checkbox" [checked]="shapes.isFillingShape" id="fill-color" (click)="fillShape()">
           <label for="fill-color"> Fill color</label>
         </div>
       </div>
     </div>
 
+    <hr>
+
+    <!-- eraser -->
+    <div class="tools">
+      <div class="tool-item"
+        [ngClass]="tools.chosenTool == 'Eraser' ? 'board_sidebar_chosen_tool': 'board_sidebar_tool'"
+        (click)="tools.pickTool('Eraser')">
+        <img src="../../../../../assets/icons/eraser.png" width="23px" height="23px" alt="">
+      </div>
+    </div>
     <!-- color picker -->
-    <div style="position: relative;">
-      <div class="pick-color-container">
+    <div class="tools">
+      <div class="picker pick-color-container">
         <div class="pick-color" [style.background]="colors.chosenColor"></div>
         <i class="fi fi-br-caret-right" (click)="openColor()"></i>
       </div>
       <div *ngIf="isChooseColor" class="picker-container">
-        <div (click)="pickColor(color)" [ngClass]="colors.chosenColor == color.color ? 'chosen_color': 'color'" [style.background]="color.color"
-          *ngFor="let color of colors.colors"></div>
+        <div (click)="pickColor(color)" [ngClass]="colors.chosenColor == color.color ? 'chosen_color': 'color'"
+          [style.background]="color.color" *ngFor="let color of colors.colors"></div>
       </div>
     </div>
-    
+
+    <!-- size pen -->
+    <div class="tools">
+      <div class="size-picker picker">
+        <p>{{tools.chosenSize}}</p>
+        <i class="fi fi-br-caret-right" (click)="openSize()"></i>
+      </div>
+      <div *ngIf="isChooseSize" class="picker-container">
+        <label for="size-slider"> Size </label>
+        <input type="range" #size id="size-slider" [value]="tools.chosenSize" min="1" max="10"
+          (change)="pickSize(size.value)">
+      </div>
+    </div>
   </div>
 
 </div>

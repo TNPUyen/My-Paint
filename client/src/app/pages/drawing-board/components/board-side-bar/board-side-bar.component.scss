@@ -1,3 +1,8 @@
+hr{
+    background-color: #f1f3f4;
+    border: 1px solid #f1f3f4;
+}
+
 .board-sidebar-container{
     // width: 5vw;
     height: 100%;
@@ -13,35 +18,79 @@
     border-radius: 10px;
 }
 
-.board_sidebar_tool{
+.tool-item{
     margin: 10px 0;
-    padding: 15px 10px;
+    padding: 12px;  
     text-align: center;
     border-radius: 50%;
 }
 
+.board_sidebar_tool{
+
+    &:hover{
+        cursor: pointer;
+    }
+}
+
 .board_sidebar_chosen_tool{
-    margin: 10px 0;
-    padding: 15px 10px;
-    border-radius: 50%;
-    text-align: center;
     background-color: #ffeaa7;
+}
+
+// tool css ========================================
+.tools{
+    position: relative;
+}
+
+.picker{
+    display: flex;
+    border-radius: 50%;
+    justify-content: flex-end;
+    margin: 10px 0;
+    padding: 12px 0;  
+    &:hover{
+        cursor: pointer;
+    }
 }
 
 .pick-shape-container{
     display: flex;
-    margin: 35px 0;
-    justify-content: center;
-    align-items: center;
+    border-radius: 50%;
+    justify-content: flex-end;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.pick-eraser-container{
+    margin: 10px 0;
+    padding: 12px;  
+    text-align: center;
+    border-radius: 50%;
 }
 
 .pick-color-container{
-    margin: 35px 0;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
+    &:hover{
+        cursor: pointer;
+    }
 }
 
+.size-picker{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    p{
+        margin: 0 10px;
+    }
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+// submenu css ========================================
 .pick-color{
     // margin: 10px 0;
     // padding: 15px;
@@ -59,9 +108,12 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 10px;
     display: flex;
-    flex-direction: column;
     gap: 10px;
     justify-content: flex-end;
+}
+
+.shape-picker-container{
+    flex-direction: column;
 }
 
 .color{

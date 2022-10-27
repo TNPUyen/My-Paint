@@ -9,6 +9,6 @@ export interface Shape{
     move(point: Point): any;
     resize(point: Point): any;
     rotate(angle: number): any;
-    fillColor(color: string): any;
+    fillColor(ctx: any): any;
     strokeColor(color: string): any;
 }

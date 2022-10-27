@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Circle } from 'src/app/models/circle';
 import { Pen } from 'src/app/models/pen';
 import { Rectangle } from 'src/app/models/rectangle';
+import { Square } from 'src/app/models/square';
+import { Triangle } from 'src/app/models/triangle';
 import { ColorsService } from 'src/app/services/colors/colors.service';
 import { ShapeService } from 'src/app/services/shapes/shape.service';
 import { ToolsService } from 'src/app/services/tools/tools.service';
@@ -52,7 +54,8 @@ export class DrawingBoardComponent implements OnInit {
   checkDrawWhat(ctx: any, e: any){
     if(!this.isDrawing) return; 
     ctx.putImageData(this.snapshot, 0, 0);
-
+    ctx.lineWidth = this.tools.chosenSize;
+    
     if(this.tools.chosenTool == 'Pen'){
       let pen = new Pen({ x: e.offsetX, y: e.offsetY });
       ctx.strokeStyle = this.colors.chosenColor;
@@ -61,11 +64,15 @@ export class DrawingBoardComponent implements OnInit {
     }else if(this.tools.chosenTool == 'Shape'){
       // let shape = new Rectangle(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
       // shape.draw(ctx);
-      this.checkShape(ctx, e);
+      if(this.shapes.isFillingShape){
+        this.drawFillShape(ctx, e);
+      }else{
+        this.drawShape(ctx, e);
+      }
     }
   }
 
-  checkShape(ctx: any, e: any){
+  drawShape(ctx: any, e: any){
     if(this.shapes.chosenShape.name == 'rectangle'){
       let rectangle = new Rectangle(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
       rectangle.draw(ctx);
@@ -74,7 +81,36 @@ export class DrawingBoardComponent implements OnInit {
       let circle = new Circle(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
       circle.draw(ctx);
     }
+    if(this.shapes.chosenShape.name == 'square'){
+      let square = new Square(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
+      square.draw(ctx);
+    }
+    if(this.shapes.chosenShape.name == 'triangle'){
+      let triangle = new Triangle(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
+      triangle.draw(ctx);
+    }
     return false;
   }
+
+  drawFillShape(ctx: any, e: any){
+    if(this.shapes.chosenShape.name == 'rectangle'){
+      let rectangle = new Rectangle(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
+      rectangle.fillColor(ctx);
+    }
+    if(this.shapes.chosenShape.name == 'circle'){
+      let circle = new Circle(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
+      circle.fillColor(ctx);
+    }
+    if(this.shapes.chosenShape.name == 'square'){
+      let square = new Square(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
+      square.fillColor(ctx);
+    }
+    if(this.shapes.chosenShape.name == 'triangle'){
+      let triangle = new Triangle(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
+      triangle.fillColor(ctx);
+    }
+    return false;
+  }
+
 
 }
