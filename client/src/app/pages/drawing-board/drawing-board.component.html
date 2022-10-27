@@ -1,8 +1,9 @@
-<div class="drawing-board">
+<div class="drawing-board" [style.cursor]="tools.chosenTool == 'Eraser' ? 'none': 'default'">
   <div class="drawing-board-content">
     <app-board-side-bar></app-board-side-bar>
     <div class="drawing-section">
-      <canvas #board id="board"></canvas>
+      <div [style.width]="tools.chosenSize *10 + 'px'" [style.display]="tools.chosenTool == 'Eraser' ? 'block': 'none'" [style.height]="tools.chosenSize *10 + 'px'" id="eraser-cursor" #eraserCursor></div>
+      <canvas #board id="board" [style.cursor]="tools.chosenTool == 'Pointer' ? 'default': tools.chosenTool == 'Eraser' ? 'none' :'crosshair'"></canvas>
     </div>
   </div>
 </div>

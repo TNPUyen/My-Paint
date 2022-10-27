@@ -20,3 +20,13 @@
     background-color: white;
     border-radius: 10px;
 }
+
+#eraser-cursor{
+    background-color: white;
+    width: 20px;
+    height: 20px;
+    border: 2px solid black;
+    pointer-events: none;
+    position: absolute;
+    display: none;
+}

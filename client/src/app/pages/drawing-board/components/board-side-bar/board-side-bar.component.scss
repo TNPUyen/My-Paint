@@ -28,12 +28,13 @@ hr{
 .board_sidebar_tool{
 
     &:hover{
-        cursor: pointer;
+        // cursor: pointer;
+        background-color: #ffeaa7;
     }
 }
 
 .board_sidebar_chosen_tool{
-    background-color: #ffeaa7;
+    background-color: #ffda79;
 }
 
 // tool css ========================================
@@ -48,7 +49,7 @@ hr{
     margin: 10px 0;
     padding: 12px 0;  
     &:hover{
-        cursor: pointer;
+        // cursor: pointer;
     }
 }
 
@@ -57,7 +58,7 @@ hr{
     border-radius: 50%;
     justify-content: flex-end;
     &:hover{
-        cursor: pointer;
+        // cursor: pointer;
     }
 }
 
@@ -72,7 +73,7 @@ hr{
     justify-content: flex-end;
     align-items: center;
     &:hover{
-        cursor: pointer;
+        // cursor: pointer;
     }
 }
 
@@ -85,7 +86,7 @@ hr{
         margin: 0 10px;
     }
     &:hover{
-        cursor: pointer;
+        // cursor: pointer;
     }
 }
 
@@ -121,7 +122,7 @@ hr{
     height: 20px;
     border: 5px solid white;
     &:hover{
-        cursor: pointer;
+        // cursor: pointer;
         border: 5px  solid rgba(239, 239, 239, 0.874);
     }
 }
@@ -140,7 +141,7 @@ hr{
     border: 5px solid white;
 
     &:hover{
-        cursor: pointer;
+        // cursor: pointer;
         background-color: rgba(239, 239, 239, 0.874);
         border: 5px  solid rgba(239, 239, 239, 0.874);
     }

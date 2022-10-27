@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { Circle } from 'src/app/models/circle';
 import { Eraser } from 'src/app/models/eraser';
+import { Line } from 'src/app/models/line';
 import { Pen } from 'src/app/models/pen';
 import { Rectangle } from 'src/app/models/rectangle';
 import { Square } from 'src/app/models/square';
@@ -19,7 +20,16 @@ export class DrawingBoardComponent implements OnInit {
   startPoint: any;
   snapshot: any;
 
-  constructor(private tools: ToolsService, private colors: ColorsService, private shapes: ShapeService) {}
+  constructor(public tools: ToolsService, private colors: ColorsService, private shapes: ShapeService) {}
+
+  @ViewChild('eraserCursor') eraserCursor: any;
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: any){
+    if(this.tools.chosenTool == 'Eraser'){
+      this.eraserCursor.nativeElement.style.left = event.clientX + this.tools.chosenSize + 'px';
+      this.eraserCursor.nativeElement.style.top = event.clientY + this.tools.chosenSize  + 'px';
+    }
+  }
 
   ngOnInit(): void {
     let canvas = document.getElementById('board') as HTMLCanvasElement;
@@ -39,7 +49,6 @@ export class DrawingBoardComponent implements OnInit {
     });
     canvas.addEventListener('mouseup', (e)=> {
       this.isDrawing = false;
-      console.log(e.offsetX, e.offsetY);
     });
     canvas.addEventListener('mousemove', (e) => {
       this.checkDrawWhat(ctx, e);
@@ -56,10 +65,10 @@ export class DrawingBoardComponent implements OnInit {
     if(!this.isDrawing) return; 
     ctx.putImageData(this.snapshot, 0, 0);
     ctx.lineWidth = this.tools.chosenSize;
+    ctx.strokeStyle = this.colors.chosenColor;
 
     if(this.tools.chosenTool == 'Pen'){
       let pen = new Pen({ x: e.offsetX, y: e.offsetY });
-      ctx.strokeStyle = this.colors.chosenColor;
       ctx.lineCap = 'round';
       pen.draw(ctx);
     }else if(this.tools.chosenTool == 'Shape'){
@@ -92,6 +101,10 @@ export class DrawingBoardComponent implements OnInit {
       let triangle = new Triangle(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
       triangle.draw(ctx);
     }
+    if(this.shapes.chosenShape.name == 'line'){
+      let line = new Line(this.startPoint, { x: e.offsetX, y: e.offsetY }, this.colors.chosenColor);
+      line.draw(ctx);
+    }
     return false;
   }
 
@@ -117,7 +130,8 @@ export class DrawingBoardComponent implements OnInit {
 
   erase(ctx: any, e: any){
     let eraser = new Eraser({ x: e.offsetX, y: e.offsetY });
-    ctx.lineWidth = this.tools.chosenSize;
-    eraser.draw(ctx);
+    ctx.lineWidth = this.tools.chosenSize * 10;
+    eraser.draw(ctx, this.tools.chosenSize);
   }
+
 }

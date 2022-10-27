@@ -10,7 +10,8 @@
       <div class="picker"
         [ngClass]="tools.chosenTool == 'Shape' ? 'board_sidebar_chosen_tool': 'board_sidebar_tool'"
         (click)="tools.pickTool('Shape')">
-        <i [class]="shapes.chosenShape.shapeIcon"></i>
+        <i *ngIf="shapes.chosenShape.name != 'line'" [class]="shapes.chosenShape.shapeIcon"></i>
+        <img *ngIf="shapes.chosenShape.name == 'line'" src="../../../../../assets/icons/diagonal-line.png" alt="">
         <i class="fi fi-br-caret-right" (click)="openShape()"></i>
       </div>
       <div *ngIf="isChooseShape" class="picker-container shape-picker-container ">
@@ -19,10 +20,14 @@
             [ngClass]="shapes.chosenShape.shapeIcon == shape.shapeIcon ? 'chosen_shape' : 'shape'">
             <i [class]="shape.shapeIcon" (click)="pickShape(shape)"></i>
           </div>
+          <div [ngClass]="shapes.chosenShape.name == 'line' ? 'chosen_shape' : 'shape'">
+            <!-- <i [class]="shape.shapeIcon" (click)="pickShape(shape)"></i> -->
+            <img src="../../../../../assets/icons/diagonal-line.png" alt="" (click)="pickShape({name: 'line'})">
+          </div>
         </div>
         <div>
-          <input type="checkbox" [checked]="shapes.isFillingShape" id="fill-color" (click)="fillShape()">
-          <label for="fill-color"> Fill color</label>
+          <input type="checkbox" [checked]="shapes.isFillingShape" id="fill-color" (click)="fillShape()" [disabled]="shapes.chosenShape.name == 'line'">
+          <label for="fill-color" [style.color]="shapes.chosenShape.name == 'line' ? 'gray': 'black'"> Fill color</label>
         </div>
       </div>
     </div>
