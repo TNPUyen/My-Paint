@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "mypaint-9c4e0": {
+      "hosting": {
+        "client": [
+          "mypaint-9c4e0"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "mypaint-9c4e0"
+  }
+}
