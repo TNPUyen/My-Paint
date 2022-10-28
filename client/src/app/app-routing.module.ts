@@ -10,6 +10,7 @@ const routes: Routes = [
         (m) => m.DrawingBoardModule
       ),
   },
+  { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },
 ];
 
 @NgModule({

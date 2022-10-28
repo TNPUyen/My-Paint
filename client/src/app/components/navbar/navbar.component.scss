@@ -1,0 +1,20 @@
+.navbar{
+    background-color: cadetblue;
+    display: flex;
+    justify-content: flex-end;
+    #account{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        img{
+            padding: 6px 0;
+            width: 50px;
+            cursor: pointer;
+        }
+        #name{
+            cursor: pointer;
+            padding: 19px 10px;
+        }
+    }
+ 
+}
