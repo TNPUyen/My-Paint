@@ -1,12 +1,12 @@
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
-import { Circle } from 'src/app/models/circle';
+import { Circle } from 'src/app/models/shapes/circle';
 import { Eraser } from 'src/app/models/eraser';
 import { Line } from 'src/app/models/line';
 import { Pen } from 'src/app/models/pen';
-import { Rectangle } from 'src/app/models/rectangle';
-import { Square } from 'src/app/models/square';
-import { Star } from 'src/app/models/star';
-import { Triangle } from 'src/app/models/triangle';
+import { Rectangle } from 'src/app/models/shapes/rectangle';
+import { Square } from 'src/app/models/shapes/square';
+import { Star } from 'src/app/models/shapes/star';
+import { Triangle } from 'src/app/models/shapes/triangle';
 import { ColorsService } from 'src/app/services/colors/colors.service';
 import { ShapeService } from 'src/app/services/shapes/shape.service';
 import { ToolsService } from 'src/app/services/tools/tools.service';

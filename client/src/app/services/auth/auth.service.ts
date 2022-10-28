@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut
 } from '@angular/fire/auth';
-import { User } from '../models/user';
+import { User } from '../../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -33,20 +33,21 @@ export class AuthService {
   }
 
   async logIn(email: string, password: string) {
-    signInWithEmailAndPassword(this.auth, email, password)
+    let message;
+    await signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         // Signed in 
-        const user = userCredential.user;
-        console.log("Login success!!!")
-        alert("Login success!!!");
-        return user
+        this.user = userCredential.user;
+        message = 'Login success!!!';
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        message = 'Can not login!!!';
         console.log(errorCode, errorMessage);
       });
+      return message;
   }
 
   async logOut() {

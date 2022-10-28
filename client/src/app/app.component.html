@@ -1,5 +1,5 @@
 <div class="container">
-  <app-navbar></app-navbar>
+  <app-navbar *ngIf="authService.user"></app-navbar>
   <div class="main-container">
     <router-outlet></router-outlet>
   </div>

@@ -1,12 +1,12 @@
 <div class="navbar" style="height: 9vh;">
-    <div id="account" *ngIf="user == null">
+    <div id="account" *ngIf="user == undefined ">
         <!-- <img id="ava" src="../../../assets/user/ava_default.png" alt="ava"> -->
-        <!-- <div id="name">
+        <div id="name">
             Account
-        </div> -->
+        </div>
     </div>
-    <div id="account" *ngIf="user">
-        <img id="ava" src="../../../assets/user/ava_default.png" alt="ava">
+    <div id="account" *ngIf="user != undefined ">
+        <img id="ava" src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2022/02/avatar-bua-cute.jpg?ssl=1" alt="ava">
         <div id="name">
             {{user.email}}
         </div>

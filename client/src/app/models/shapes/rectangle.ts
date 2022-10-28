@@ -1,7 +1,7 @@
-import { Point } from "./point";
+import { Point } from "../point";
 import { Shape } from "./shape";
 
-export class Square implements Shape {
+export class Rectangle implements Shape {
     startPoint: Point;
     endPoint: Point;
     color: string;
@@ -12,8 +12,7 @@ export class Square implements Shape {
     }
 
     draw(ctx: any) { 
-        let size = this.endPoint.x - this.startPoint.x;
-        ctx.strokeRect(this.startPoint.x, this.startPoint.y, size, size);
+        ctx.strokeRect(this.startPoint.x, this.startPoint.y, this.endPoint.x - this.startPoint.x, this.endPoint.y - this.startPoint.y);
         ctx.strokeStyle = this.color;
         ctx.stroke();
     }
@@ -27,11 +26,8 @@ export class Square implements Shape {
         throw new Error("Method not implemented.");
     }
     fillColor(ctx:any) {
-        let size = this.endPoint.x - this.startPoint.x;
-        ctx.fillRect(this.startPoint.x, this.startPoint.y, size, size);
         ctx.fillStyle = this.color;
-        ctx.fill();
-        ctx.strokeStyle = this.color;
+        ctx.fillRect(this.startPoint.x, this.startPoint.y, this.endPoint.x - this.startPoint.x, this.endPoint.y - this.startPoint.y);
         ctx.stroke();
     }
     strokeColor(color: string) {

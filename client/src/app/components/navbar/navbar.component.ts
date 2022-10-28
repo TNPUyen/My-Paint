@@ -5,7 +5,8 @@ import {
   onAuthStateChanged,
 
 } from '@angular/fire/auth';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -13,8 +14,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  user !: User
-  constructor(private auth: Auth,private authService: AuthService) {
+  user !: any;
+  constructor(private auth: Auth,private authService: AuthService, private router: Router) {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.user = {
@@ -29,13 +30,7 @@ export class NavbarComponent implements OnInit {
       } else {
         // User is signed out
         // ...
-        this.user = {
-          uid: '',
-          displayName: '',
-          email: '',
-          photoURL: '',
-          emailVerified: false,
-        }
+        this.user = undefined
         console.log(this.user)
       }
     });
@@ -46,6 +41,7 @@ export class NavbarComponent implements OnInit {
 
   async logout(){
     await this.authService.logOut();
+    this.router.navigate(['']);
   }
 
 }
