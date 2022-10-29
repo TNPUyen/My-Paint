@@ -7,5 +7,6 @@ export const environment = {
     authDomain: 'mypaint-9c4e0.firebaseapp.com',
     messagingSenderId: '768467458882',
   },
-  production: true
+  production: true,
+  endpoint: 'http://127.0.0.1:3000/',
 };

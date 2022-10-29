@@ -7,13 +7,14 @@ import {
   authState
 } from '@angular/fire/auth';
 import { User } from '../../models/user.model';
+import { HttpService } from '../http/http.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   user !: User | undefined;
-  constructor(private auth: Auth) {
+  constructor(private auth: Auth,private httpService: HttpService) {
     authState(auth).subscribe((user) => {
       if (user != null) {
         this.user = user;
@@ -25,10 +26,17 @@ export class AuthService {
     await createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         //Signed in
-        const user = userCredential.user;
-        alert("Sign up success!!!");
+        const user : User = userCredential.user;
+        // console.log(user);
+        this.httpService.createUser(user).subscribe((newUser) =>{
+          if(newUser == null){
+            console.log('user is already created !!!');
+          }else{
+            console.log(newUser);
+            alert("Sign up success!!!");
+          }
+        })
         return user
-
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -43,6 +51,7 @@ export class AuthService {
       .then((userCredential) => {
         // Signed in 
         this.user = userCredential.user;
+        console.log(this.user)
         message = 'Login success!!!';
         // ...
       })
@@ -52,7 +61,7 @@ export class AuthService {
         message = 'Can not login!!!';
         console.log(errorCode, errorMessage);
       });
-      return message;
+    return message;
   }
 
   async logOut() {
