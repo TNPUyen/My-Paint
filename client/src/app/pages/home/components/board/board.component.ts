@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-board',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoardComponent implements OnInit {
 
-  constructor() { }
+  @Input() board: any;
+
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  // openBoard(board: any) {
+  //   this.router.navigate(['/drawing-board', board.id]);
+  // }
+
+  openBoard(){
+    this.router.navigate(['/drawing-board']);
   }
 
 }

@@ -1,5 +1,4 @@
 .container{
-    background-color: #f1f3f4;
     overflow: hidden;
     height: 100vh;
     display: grid;
@@ -8,7 +7,5 @@
 
 
 .main-container{
-    padding: 10px;
-    overflow-y: scroll;
-
+    overflow-y: auto;
 }

@@ -1,0 +1,57 @@
+.home-navbar-container{
+    left: 0px;
+    // position: fixed;
+    height: 4rem;
+    width: 100%;
+    background-color: white;
+}
+
+.home-navbar{
+    padding: 0px 48px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.title{
+    display: inline-block;
+    color: #5f6368;
+    text-align: center;
+    vertical-align: middle;
+    margin: auto 0;
+    font-weight: 500;
+}
+
+.home-option{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+// dropdown button css
+.home-option-dropdownBtn{
+    color: #5f6368;
+    margin: auto 0;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    border-radius: 40px;
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    letter-spacing: 0.2px;
+    padding: 0 16px;
+    margin: 0px;
+    align-items: center;
+    text-align: center;
+
+    &:hover{
+        background-color: rgba(95,99,104,0.04);
+    }
+}
+
+#chosen-option{
+    margin-right: 5px;
+}
+
