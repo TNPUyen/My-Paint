@@ -1,13 +1,13 @@
 <div class="board-sidebar-container">
   <div class="board-sidebar-content">
-    <div class="tool-item" [ngClass]="tools.chosenTool == tool.name ? 'board_sidebar_chosen_tool': 'board_sidebar_tool'"
+    <div class="tool-item"  [ngClass]="tools.chosenTool == tool.name ? 'board_sidebar_chosen_tool': 'board_sidebar_tool'"
       *ngFor="let tool of toolsList" (click)="tools.pickTool(tool.name)">
       <i [class]="tool.icon"></i>
     </div>
 
     <!-- shape picker -->
     <div style="position: relative">
-      <div class="picker"
+      <div class="tool-item" 
         [ngClass]="tools.chosenTool == 'Shape' ? 'board_sidebar_chosen_tool': 'board_sidebar_tool'"
         (click)="tools.pickTool('Shape')">
         <i *ngIf="shapes.chosenShape.name != 'line'" [class]="shapes.chosenShape.shapeIcon"></i>
@@ -57,7 +57,7 @@
     <!-- size pen -->
     <div class="tools">
       <div class="size-picker picker">
-        <p>{{tools.chosenSize}}</p>
+        <p id="chosen-size">{{tools.chosenSize}}</p>
         <i class="fi fi-br-caret-right" (click)="openSize()"></i>
       </div>
       <div *ngIf="isChooseSize" class="picker-container">

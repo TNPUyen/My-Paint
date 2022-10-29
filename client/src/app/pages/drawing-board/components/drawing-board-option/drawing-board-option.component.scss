@@ -1,0 +1,52 @@
+.drawing-board-navbar{
+    height: 2.75rem;
+    width: 100%;
+    background-color: white;
+    border-bottom: 1px solid #dadce0;
+}
+
+.drawing-board-navbar-content{
+    height: 100%;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-option, .right-option{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+// LEFT OPTION CSS ========================================
+.arrow-icon{
+    margin: 0 8px;
+    height: 24px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    i{
+        font-size: 20px;
+    }
+    &:hover{
+        cursor: pointer;
+        background-color: #F1F3F4;
+    }
+}
+.vert-division{
+    height: 26px;
+    margin: 8px 10px;
+    border-left: 1px solid #dadce0;
+}
+
+.title-option{
+    padding: 5px 8px;
+    height: 24px;
+    border-radius: 5px;
+    &:hover{
+        cursor: pointer;
+        background-color: #F1F3F4;
+    }
+}
+// RIGHT OPTION CSS ========================================

@@ -59,7 +59,7 @@ export class DrawingBoardComponent implements OnInit {
   fixCanvasBlurry(canvas: any){
     const dpr = window.devicePixelRatio || 1;
     canvas.width = 1100 * dpr;
-    canvas.height = 500  * dpr; 
+    canvas.height = 470  * dpr; 
   }
 
   checkDrawWhat(ctx: any, e: any){

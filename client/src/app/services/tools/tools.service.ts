@@ -17,6 +17,16 @@ export class ToolsService {
       name: 'Pen',
       icon: 'fi fi-sr-paint',
     },
+    {
+      id: 2,
+      name: 'Text',
+      icon: 'fi fi-rr-text',
+    },
+    {
+      id: 3,
+      name: 'Image',
+      icon: 'fi fi-br-picture',
+    },
   ]
 
 
