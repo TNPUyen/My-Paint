@@ -43,7 +43,11 @@ export class LoginComponent implements OnInit {
     let message = await this.authService.logIn(tempForm.email, tempForm.password);
     alert(message);
     this.form.reset(this.form);
-    this.router.navigate(['/drawing-board']);
+    this.router.navigate(['/home']);
+  }
+
+  onKeyDown(event: any) {
+    console.log(event);
   }
 
 }

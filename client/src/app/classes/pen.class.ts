@@ -1,5 +1,5 @@
-import { Point } from "./point";
-import { Shape } from "./shapes/shape";
+import { Point } from "./point.class";
+import { Shape } from "./shapes/shape.class";
 
 export class Pen{
     position: Point;

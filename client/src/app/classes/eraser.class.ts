@@ -1,4 +1,4 @@
-import { Point } from "./point";
+import { Point } from "./point.class";
 
 export class Eraser{
     position: Point;

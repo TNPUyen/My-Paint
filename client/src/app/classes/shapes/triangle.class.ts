@@ -1,5 +1,5 @@
-import { Point } from "../point";
-import { Shape } from "./shape";
+import { Point } from "../point.class";
+import { Shape } from "./shape.class";
 
 export class Triangle implements Shape{
     startPoint: Point;

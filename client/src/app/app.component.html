@@ -1,5 +1,7 @@
-<div class="container">
-  <app-navbar *ngIf="authService.user"></app-navbar>
+<router-outlet  *ngIf="authService.user == undefined"></router-outlet>
+
+<div class="container" *ngIf="authService.user != undefined">
+  <app-navbar></app-navbar>
   <div class="main-container">
     <router-outlet></router-outlet>
   </div>

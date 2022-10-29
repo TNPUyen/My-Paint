@@ -42,8 +42,8 @@
                         Password is empty.
                     </small>
                 </div>
-            </div>
-            <button class="cta-btn" type="submit" [disabled]="!form.valid" (click)="signIn()">Log In</button>
+            </div> 
+            <button class="cta-btn" type="submit" [disabled]="!form.valid"  (click)="signIn()">Log In</button>
 
         </div>
 
@@ -54,7 +54,7 @@
                 <label for="password"><b>Password</b></label>
                 <input id="password" type="password" placeholder="Enter Password" formControlName="password">
             </div>
-            <button class="cta-btn" type="submit" [disabled]="!form.valid" (click)="signUp()">Regist</button>
+            <button class="cta-btn" type="submit" [disabled]="!form.valid"(click)="signUp()">Regist</button>
         </div>
         <a class="forget-pass">Forgot Password?</a>
     </form>

@@ -3,16 +3,22 @@ import {
   Auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
+  authState
 } from '@angular/fire/auth';
-import { User } from '../../models/user';
+import { User } from '../../models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  user !: User
+  user !: User | undefined;
   constructor(private auth: Auth) {
+    authState(auth).subscribe((user) => {
+      if (user != null) {
+        this.user = user;
+      }
+    });
   }
 
   async register(email: string, password: string) {
@@ -20,7 +26,6 @@ export class AuthService {
       .then((userCredential) => {
         //Signed in
         const user = userCredential.user;
-        console.log("Sign up success!!!")
         alert("Sign up success!!!");
         return user
 
@@ -53,6 +58,7 @@ export class AuthService {
   async logOut() {
     await signOut(this.auth).then(() => {
       // Sign-out successful.
+      this.user = undefined;
     }).catch((error) => {
       // An error happened.
       const errorCode = error.code;

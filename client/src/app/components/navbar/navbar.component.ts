@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/models/user.model';
 import {
   Auth,
   onAuthStateChanged,
@@ -14,26 +14,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  user !: any;
-  constructor(private auth: Auth,private authService: AuthService, private router: Router) {
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        this.user = {
-          uid: user.uid,
-          displayName: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-          emailVerified: user.emailVerified,
-        }
-        console.log(this.user)
-        // ...
-      } else {
-        // User is signed out
-        // ...
-        this.user = undefined
-        console.log(this.user)
-      }
-    });
+  constructor(public authService: AuthService, private router: Router) {
+    
    }
 
   ngOnInit(): void {
