@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { BoardService } from 'src/app/services/board/board.service';
+import { ToolsService } from 'src/app/services/tools/tools.service';
 
 @Component({
   selector: 'app-drawing-board-option',
@@ -7,9 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DrawingBoardOptionComponent implements OnInit {
 
-  constructor() { }
+  @Output() clearBoardEvent: EventEmitter<any> = new EventEmitter();
+  @Output() changeBgEvent: EventEmitter<any> = new EventEmitter();
+
+  isChangeBg: boolean = false;
+
+  constructor(public toolsService: ToolsService, public boardService: BoardService) { }
 
   ngOnInit(): void {
+  }
+
+  clearBoard(){
+    this.clearBoardEvent.emit(true);
+  }
+
+  openBackgroundOption(){
+    this.isChangeBg = !this.isChangeBg;
+  }
+
+  changeBackground(event: any){
+    this.changeBgEvent.emit(event);
+    this.isChangeBg = !this.isChangeBg;
   }
 
 }

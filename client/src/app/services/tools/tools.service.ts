@@ -29,10 +29,16 @@ export class ToolsService {
     },
   ]
 
+  bgBoardOption = [
+    'Default',
+    'Dot',
+    'Graph',
+  ]
 
   constructor() { }
 
   pickTool(toolId: string){
     this.chosenTool = toolId;
   }
+
 }

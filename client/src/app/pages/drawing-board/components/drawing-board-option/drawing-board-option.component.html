@@ -4,9 +4,12 @@
             <div class="arrow-icon"><i class="fi fi-br-arrow-small-left"></i></div>
             <div class="arrow-icon"><i class="fi fi-br-arrow-small-right"></i></div>
             <div class="vert-division"></div>
-            <div class="title-option">Set background</div>
+            <div>
+                <div class="title-option bg-option" (click)="openBackgroundOption()" >Set background</div>
+                <app-dropdown *ngIf="isChangeBg" [chosenOption]="boardService.chosenBg" [options]="toolsService.bgBoardOption" (changeOptionEvent)="changeBackground($event)"></app-dropdown>
+            </div>
             <div class="vert-division"></div>
-            <div class="title-option">Clear frame</div>
+            <div class="title-option" (click)="clearBoard()">Clear frame</div>
         </div>
         <div class="right-option">
             <button>Share</button>

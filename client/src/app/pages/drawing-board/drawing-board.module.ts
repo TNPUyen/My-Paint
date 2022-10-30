@@ -5,6 +5,7 @@ import { DrawingBoardRoutingModule } from './drawing-board-routing.module';
 import { DrawingBoardComponent } from './drawing-board.component';
 import { BoardSideBarComponent } from './components/board-side-bar/board-side-bar.component';
 import { DrawingBoardOptionComponent } from './components/drawing-board-option/drawing-board-option.component';
+import { ShareModule } from 'src/app/modules/share/share.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { DrawingBoardOptionComponent } from './components/drawing-board-option/d
   ],
   imports: [
     CommonModule,
-    DrawingBoardRoutingModule
+    DrawingBoardRoutingModule,
+    ShareModule
   ]
 })
 export class DrawingBoardModule { }
