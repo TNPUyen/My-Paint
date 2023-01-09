@@ -22,6 +22,9 @@ export class DrawingBoardComponent implements OnInit, OnChanges {
   startPoint: any;
   snapshot: any;
   bg: any;
+  canvas: any;
+  ctx: any;
+  drawingPic: any;
 
   constructor(
     public tools: ToolsService,
@@ -44,27 +47,44 @@ export class DrawingBoardComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    let canvas = document.getElementById('board') as HTMLCanvasElement;
+    this.canvas = document.getElementById('board') as HTMLCanvasElement;
 
-    this.fixCanvasBlurry(canvas);
+    this.fixCanvasBlurry(this.canvas);
 
-    let ctx = canvas.getContext('2d');
+    this.ctx = this.canvas.getContext('2d');
+
+    this.reDrawAll();
 
     this.isDrawing = false;
 
-    canvas.addEventListener('mousedown', (e) => {
+    this.canvas.addEventListener('mousedown', (e: any) => {
       this.isDrawing = true;
       this.startPoint = { x: e.offsetX, y: e.offsetY };
-      ctx?.beginPath();
-      this.snapshot = ctx?.getImageData(0, 0, canvas.width, canvas.height);
+      this.ctx?.beginPath();
+      this.snapshot = this.ctx?.getImageData(0, 0, this.canvas.width, this.canvas.height);
+      
+      this.drawingPic = {
+        tool: this.tools.chosenTool,
+        color: this.colors.chosenColor,
+        size: this.tools.chosenSize,
+        startPoint: this.startPoint,
+        isFillingShape: this.shapes.isFillingShape,
+        chosenShape: this.shapes.chosenShape,
+        pointList: [],
+      };
     });
-    canvas.addEventListener('mouseup', (e) => {
+    this.canvas.addEventListener('mouseup', (e: any) => {
+      
+      this.boardService.drawingList.push(this.drawingPic);
       this.isDrawing = false;
+      console.log(this.boardService.drawingList)
+      localStorage.setItem('drawingList', JSON.stringify(this.boardService.drawingList));
+      this.drawingPic = null;
     });
-    canvas.addEventListener('mousemove', (e) => {
-      this.checkDrawWhat(ctx, e);
+    this.canvas.addEventListener('mousemove', (e: any) => {
+      this.checkDrawWhat(this.ctx, e);
     });
-
+    // this.changeBoardBg(ctx, canvas);
   }
 
   fixCanvasBlurry(canvas: any) {
@@ -78,6 +98,7 @@ export class DrawingBoardComponent implements OnInit, OnChanges {
     ctx.putImageData(this.snapshot, 0, 0);
     ctx.lineWidth = this.tools.chosenSize;
     ctx.strokeStyle = this.colors.chosenColor;
+    this.drawingPic.pointList.push({ x: e.offsetX, y: e.offsetY });
 
     if (this.tools.chosenTool == 'Pen') {
       let pen = new Pen({ x: e.offsetX, y: e.offsetY });
@@ -203,14 +224,27 @@ export class DrawingBoardComponent implements OnInit, OnChanges {
       let canvas = document.getElementById('board') as HTMLCanvasElement;
       let ctx = canvas.getContext('2d');
       ctx?.clearRect(0, 0, canvas.width, canvas.height);
+      localStorage.removeItem('drawingList');
     }
   }
 
-  changeBoardBg(ctx: any, canvas: any) {
-    switch(this.boardService.chosenBg){
-      case 'Dot': this.boardService.drawDot(canvas, ctx); break;
-      case 'Graph':this.boardService.drawGrid(canvas,ctx);break;
+  changeBoardBg(event: any) {
+    // let canvas = document.getElementById('board') as HTMLCanvasElement;
+    // let ctx = canvas.getContext('2d');
+    this.boardService.chosenBg = event;
+    switch(event){
+      case 'Dot': this.boardService.drawDot(this.canvas, this.ctx); break;
+      case 'Graph':this.boardService.drawGrid(this.canvas, this.ctx);break;
       default: break;
+    }
+  }
+
+  reDrawAll() {
+    let temp = localStorage.getItem('drawingList');
+    if (temp) {
+      this.clearBoard(true);
+      this.boardService.drawingList = JSON.parse(temp)
+      this.boardService.drawAll(this.canvas, this.ctx);
     }
   }
 }
