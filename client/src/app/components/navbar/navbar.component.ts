@@ -23,7 +23,6 @@ export class NavbarComponent implements OnInit {
 
   async logout(){
     await this.authService.logOut();
-    this.router.navigate(['']);
   }
 
 }

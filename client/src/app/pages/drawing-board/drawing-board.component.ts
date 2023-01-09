@@ -11,6 +11,7 @@ import { ColorsService } from 'src/app/services/colors/colors.service';
 import { ShapeService } from 'src/app/services/shapes/shape.service';
 import { ToolsService } from 'src/app/services/tools/tools.service';
 import { BoardService } from 'src/app/services/board/board.service';
+import { Paper } from 'src/app/models/paper.model';
 
 @Component({
   selector: 'app-drawing-board',
@@ -22,6 +23,15 @@ export class DrawingBoardComponent implements OnInit, OnChanges {
   startPoint: any;
   snapshot: any;
   bg: any;
+  paper: Paper = {
+    _id: '',
+    background: 'default',
+    freedraws: [],
+    shapes: [],
+    texts: [],
+    images: [],
+    erasers: [],
+  };
 
   constructor(
     public tools: ToolsService,
@@ -48,13 +58,14 @@ export class DrawingBoardComponent implements OnInit, OnChanges {
 
     this.fixCanvasBlurry(canvas);
 
-    let ctx = canvas.getContext('2d');
+    let ctx = canvas.getContext('2d',{ willReadFrequently: true });
 
     this.isDrawing = false;
 
     canvas.addEventListener('mousedown', (e) => {
       this.isDrawing = true;
       this.startPoint = { x: e.offsetX, y: e.offsetY };
+      
       ctx?.beginPath();
       this.snapshot = ctx?.getImageData(0, 0, canvas.width, canvas.height);
     });

@@ -4,8 +4,12 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  authState
+  authState,
+  signInWithPopup,
+  GoogleAuthProvider
 } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { from } from 'rxjs';
 import { User } from '../../models/user.model';
 import { HttpService } from '../http/http.service';
 
@@ -14,7 +18,7 @@ import { HttpService } from '../http/http.service';
 })
 export class AuthService {
   user !: User | undefined;
-  constructor(private auth: Auth,private httpService: HttpService) {
+  constructor(private auth: Auth,private httpService: HttpService, private router: Router) {
     authState(auth).subscribe((user) => {
       if (user != null) {
         this.user = user;
@@ -34,6 +38,7 @@ export class AuthService {
           }else{
             console.log(newUser);
             alert("Sign up success!!!");
+            this.router.navigate(['/home']);
           }
         })
         return user
@@ -53,6 +58,8 @@ export class AuthService {
         this.user = userCredential.user;
         console.log(this.user)
         message = 'Login success!!!';
+        this.router.navigate(['/home']);
+
         // ...
       })
       .catch((error) => {
@@ -68,6 +75,7 @@ export class AuthService {
     await signOut(this.auth).then(() => {
       // Sign-out successful.
       this.user = undefined;
+      this.router.navigate(['/']);
     }).catch((error) => {
       // An error happened.
       const errorCode = error.code;
@@ -75,4 +83,32 @@ export class AuthService {
       console.log(errorCode, errorMessage);
     });
   }
+
+
+  // //sign in with gg by modular
+  // login() {
+  //   return from(new Promise<string>(async (resolve, reject) => {
+  //     try {
+  //       let credential = await signInWithPopup(this.auth, new GoogleAuthProvider());
+  //       // await this.SetUserData(credential.user);
+  //       let idToken = await credential.user.getIdToken();
+  //       resolve(idToken);
+  //     } catch {
+  //       reject('Cannot login with google');
+  //     }
+  //   }));
+  // }
+
+  // // Sign out
+  // async SignOut() {
+  //   return from(new Promise<any>(async (resolve, reject) => {
+  //     try {
+  //       await signOut(this.auth);
+  //       resolve("log out");
+  //     }
+  //     catch {
+  //       reject("logout fail");
+  //     }
+  //   }))
+  // }
 }
