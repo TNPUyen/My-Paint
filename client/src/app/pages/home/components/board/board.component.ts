@@ -20,7 +20,7 @@ export class BoardComponent implements OnInit {
   // }
 
   openBoard(){
-    this.router.navigate(['/drawing-board']);
+    this.router.navigate(['/draw']);
   }
 
 }

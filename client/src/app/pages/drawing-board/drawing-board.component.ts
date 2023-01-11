@@ -11,31 +11,43 @@ import { ColorsService } from 'src/app/services/colors/colors.service';
 import { ShapeService } from 'src/app/services/shapes/shape.service';
 import { ToolsService } from 'src/app/services/tools/tools.service';
 import { BoardService } from 'src/app/services/board/board.service';
+import { Paper } from 'src/app/models/paper.model';
+import { Observable } from 'rxjs';
+import { Freedraw } from 'src/app/models/freedraw';
 
 @Component({
   selector: 'app-drawing-board',
   templateUrl: './drawing-board.component.html',
   styleUrls: ['./drawing-board.component.scss'],
 })
-export class DrawingBoardComponent implements OnInit, OnChanges {
+export class DrawingBoardComponent implements OnInit {
   isDrawing!: boolean;
   startPoint: any;
   snapshot: any;
   bg: any;
+  paper: Paper = {
+    _id: '',
+    background: 'Default',
+    objects: [],
+  };
   canvas: any;
   ctx: any;
   drawingPic: any;
+  test$: Observable<any> = this.boardService.getMessage();
 
   constructor(
     public tools: ToolsService,
     private colors: ColorsService,
     private shapes: ShapeService,
     public boardService: BoardService,
-  ) {}
-  ngOnChanges(): void {
-    console.log(this.boardService.chosenBg)
-    console.log(this.bg)
+  ) {
+
   }
+
+  // ngOnChanges(): void {
+  //   console.log(this.boardService.chosenBg)
+  //   console.log(this.bg)
+  // }
 
   @ViewChild('eraserCursor') eraserCursor: any;
   @HostListener('document:mousemove', ['$event'])
@@ -47,44 +59,72 @@ export class DrawingBoardComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+
     this.canvas = document.getElementById('board') as HTMLCanvasElement;
-
     this.fixCanvasBlurry(this.canvas);
+    this.ctx = this.canvas.getContext('2d', { willReadFrequently: true });
 
-    this.ctx = this.canvas.getContext('2d');
-
-    this.reDrawAll();
-
+    let chosenBg = this.boardService.chosenBg;
+    if (chosenBg == '"Dot"') {
+      this.boardService.drawDot(this.canvas, this.ctx);
+    } else if (chosenBg == '"Graph"') {
+      this.boardService.drawGrid(this.canvas, this.ctx);
+    }
+    this.reDrawAll(this.ctx, this.canvas);
     this.isDrawing = false;
 
     this.canvas.addEventListener('mousedown', (e: any) => {
-      this.isDrawing = true;
-      this.startPoint = { x: e.offsetX, y: e.offsetY };
-      this.ctx?.beginPath();
-      this.snapshot = this.ctx?.getImageData(0, 0, this.canvas.width, this.canvas.height);
-      
-      this.drawingPic = {
-        tool: this.tools.chosenTool,
-        color: this.colors.chosenColor,
-        size: this.tools.chosenSize,
-        startPoint: this.startPoint,
-        isFillingShape: this.shapes.isFillingShape,
-        chosenShape: this.shapes.chosenShape,
-        pointList: [],
-      };
+
+      if (this.tools.chosenTool != 'Pointer') {
+        this.isDrawing = true;
+        this.startPoint = { x: e.offsetX, y: e.offsetY };
+        this.ctx?.beginPath();
+        this.snapshot = this.ctx?.getImageData(0, 0, this.canvas.width, this.canvas.height);
+
+        this.drawingPic = {
+          tool: this.tools.chosenTool,
+          color: this.colors.chosenColor,
+          size: this.tools.chosenSize,
+          startPoint: this.startPoint,
+          isFillingShape: this.shapes.isFillingShape,
+          chosenShape: this.shapes.chosenShape,
+          pointList: [],
+        };
+      }
+
+
     });
     this.canvas.addEventListener('mouseup', (e: any) => {
-      
-      this.boardService.drawingList.push(this.drawingPic);
-      this.isDrawing = false;
-      console.log(this.boardService.drawingList)
-      localStorage.setItem('drawingList', JSON.stringify(this.boardService.drawingList));
-      this.drawingPic = null;
+      if (this.tools.chosenTool != 'Pointer') {
+        this.boardService.drawingList.push(this.drawingPic);
+        this.isDrawing = false;
+        console.log(this.boardService.drawingList);
+        this.paper.objects.push(
+          new Freedraw({
+            color: this.drawingPic.color,
+            size: this.drawingPic.size,
+            points: this.drawingPic.pointList,
+          })
+        )
+        this.paper = {
+          ...this.paper,
+          background: this.boardService.chosenBg,
+        }
+        this.boardService.sendMessage(this.paper)
+        localStorage.setItem('drawingList', JSON.stringify(this.boardService.drawingList));
+        localStorage.setItem('background', JSON.stringify(this.boardService.chosenBg));
+        this.drawingPic = null;
+      }
     });
+
     this.canvas.addEventListener('mousemove', (e: any) => {
       this.checkDrawWhat(this.ctx, e);
     });
     // this.changeBoardBg(ctx, canvas);
+
+    this.test$.subscribe((data) => {
+      console.log(data)
+    })
   }
 
   fixCanvasBlurry(canvas: any) {
@@ -224,27 +264,44 @@ export class DrawingBoardComponent implements OnInit, OnChanges {
       let canvas = document.getElementById('board') as HTMLCanvasElement;
       let ctx = canvas.getContext('2d');
       ctx?.clearRect(0, 0, canvas.width, canvas.height);
+      this.boardService.chosenBg = 'Default';
+      this.boardService.drawingList = [];
+      localStorage.setItem('background', JSON.stringify('Default'));
       localStorage.removeItem('drawingList');
     }
   }
 
   changeBoardBg(event: any) {
-    // let canvas = document.getElementById('board') as HTMLCanvasElement;
-    // let ctx = canvas.getContext('2d');
+    let canvas = document.getElementById('board') as HTMLCanvasElement;
+    let ctx = canvas.getContext('2d');
     this.boardService.chosenBg = event;
-    switch(event){
-      case 'Dot': this.boardService.drawDot(this.canvas, this.ctx); break;
-      case 'Graph':this.boardService.drawGrid(this.canvas, this.ctx);break;
+    switch (event) {
+      case 'Dot':
+        localStorage.setItem('background', JSON.stringify('Dot'));
+        ctx?.clearRect(0, 0, canvas.width, canvas.height);
+        this.boardService.drawDot(this.canvas, this.ctx);
+        this.reDrawAll(ctx, canvas);
+        break;
+      case 'Graph':
+        localStorage.setItem('background', JSON.stringify('Graph'));
+        ctx?.clearRect(0, 0, canvas.width, canvas.height);
+        this.boardService.drawGrid(this.canvas, this.ctx);
+        this.reDrawAll(ctx, canvas); break;
+      case 'Default':
+        localStorage.setItem('background', JSON.stringify('Default'));
+        ctx?.clearRect(0, 0, canvas.width, canvas.height);
+        this.reDrawAll(ctx, canvas); break;
       default: break;
     }
   }
 
-  reDrawAll() {
+  reDrawAll(ctx: any, canvas: any) {
+    // console.log('reDrawAll');
     let temp = localStorage.getItem('drawingList');
     if (temp) {
-      this.clearBoard(true);
+      // this.clearBoard(true);
       this.boardService.drawingList = JSON.parse(temp)
-      this.boardService.drawAll(this.canvas, this.ctx);
+      this.boardService.drawAll(canvas, ctx);
     }
   }
 }

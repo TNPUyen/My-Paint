@@ -13,9 +13,10 @@ export class UserService {
     }
 
     async create(user: User) {
+        console.log('creating user...')
         const user_Indb = await this.userModel.findOne({ email: user.email})
         if(!user_Indb){
-          console.log(1);
+          console.log('start creating user...');
           const newUser = new this.userModel();
           newUser.displayName = user.displayName;
           newUser.photoURL = user.photoURL;

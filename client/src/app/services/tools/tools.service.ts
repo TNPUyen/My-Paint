@@ -39,6 +39,7 @@ export class ToolsService {
 
   pickTool(toolId: string){
     this.chosenTool = toolId;
+    console.log(this.chosenTool)
   }
 
 }

@@ -6,7 +6,7 @@
             <div class="vert-division"></div>
             <div>
                 <div class="title-option bg-option" (click)="openBackgroundOption()" >Set background</div>
-                <app-dropdown *ngIf="isChangeBg" [chosenOption]="boardService.chosenBg" [options]="toolsService.bgBoardOption" (changeOptionEvent)="changeBackground($event)"></app-dropdown>
+                <app-dropdown *ngIf="isChangeBg" (changeOptionEvent)="changeBackground($event)"></app-dropdown>
             </div>
             <div class="vert-division"></div>
             <div class="title-option" (click)="clearBoard()">Clear board</div>
