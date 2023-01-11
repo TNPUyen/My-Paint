@@ -14,6 +14,14 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+
+const config : SocketIoConfig = { 
+  url: 'http://localhost:3000',
+  options: {
+    transports: ['websocket']
+  }
+}
 
 @NgModule({
   declarations: [
@@ -31,7 +39,8 @@ import { EffectsModule } from '@ngrx/effects';
     provideStorage(() => getStorage()),
     HttpClientModule,
     StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent]

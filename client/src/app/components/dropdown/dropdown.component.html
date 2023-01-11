@@ -1,7 +1,8 @@
 <div class="dropdown-container">
     <div class="dropdown-content">
         <div class="dropdown-option-container">
-            <div class="dropdown-option" [ngClass]="chosenOption == option ? 'chosen-option' : 'dropdown-option'" *ngFor="let option of options" (click)="selectOption(option)">
+            <div class="dropdown-option" *ngFor="let option of toolService.bgBoardOption" (click)="selectOption(option)"
+                [ngClass]="chosenOption == option ? 'chosen-option' : 'dropdown-option'">
                 {{option}}
             </div>
         </div>

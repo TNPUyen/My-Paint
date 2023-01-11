@@ -4,16 +4,19 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './modules/user/user.module';
+import { PaperModule } from './modules/paper/paper.module';
+import { FileModule } from './modules/file/file.module';
+
 import databaseConfig from './configuration/database.config';
-import { BoardModule } from './modules/board/board.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot(databaseConfig().appDatabase),
     UserModule,
-    BoardModule
+    PaperModule,
+    FileModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService ],
 })
 export class AppModule {}

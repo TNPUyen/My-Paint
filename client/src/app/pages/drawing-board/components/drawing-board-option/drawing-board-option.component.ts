@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import { BoardService } from 'src/app/services/board/board.service';
 import { ToolsService } from 'src/app/services/tools/tools.service';
 
@@ -10,7 +11,7 @@ import { ToolsService } from 'src/app/services/tools/tools.service';
 export class DrawingBoardOptionComponent implements OnInit {
 
   @Output() clearBoardEvent: EventEmitter<any> = new EventEmitter();
-  @Output() changeBgEvent: EventEmitter<any> = new EventEmitter();
+  @Output() changeBgEvent: EventEmitter<string> = new EventEmitter();
 
   isChangeBg: boolean = false;
 
@@ -27,7 +28,7 @@ export class DrawingBoardOptionComponent implements OnInit {
     this.isChangeBg = !this.isChangeBg;
   }
 
-  changeBackground(event: any){
+  changeBackground(event: string){
     this.changeBgEvent.emit(event);
     this.isChangeBg = !this.isChangeBg;
   }
